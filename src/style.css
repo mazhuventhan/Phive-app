@@ -1,28 +1,26 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box
 }
 
 body {
     font-family: 'Arial', sans-serif;
-    /* overflow: hidden; */
-    /* height: 100vh; */
-    width: 100%;
+    width: 100%
 }
 
 .carousel-container {
     position: relative;
     width: 100%;
     height: 100vh;
-    overflow: hidden;
+    overflow: hidden
 }
 
 .carousel-wrapper {
     position: relative;
     width: 100%;
     height: 100%;
-    display: flex;
+    display: flex
 }
 
 .carousel-slide {
@@ -33,28 +31,28 @@ body {
     left: 0;
     opacity: 0;
     transform: translateX(100%);
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-in-out;
+    transition: transform 0.8s cubic-bezier(.4, 0, .2, 1), opacity 0.8s ease-in-out;
     will-change: transform, opacity;
-    z-index: 1;
+    z-index: 1
 }
 
 .carousel-slide.active {
     opacity: 1;
     transform: translateX(0);
-    z-index: 3;
+    z-index: 3
 }
 
 .carousel-slide.prev {
     transform: translateX(-100%);
     opacity: 0;
-    z-index: 1;
+    z-index: 1
 }
 
 .slide-content {
     width: 100%;
     height: 100%;
     position: relative;
-    overflow: hidden;
+    overflow: hidden
 }
 
 .video-container {
@@ -65,25 +63,24 @@ body {
     height: 100%;
     z-index: 1;
     opacity: 0;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.8s ease
 }
 
 .video-container.playing {
-    opacity: 1;
+    opacity: 1
 }
 
 .hero-video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover
 }
 
-/* Banner Split Animation */
 .banner-wrapper {
     position: relative;
     width: 100%;
     height: 100%;
-    z-index: 2;
+    z-index: 2
 }
 
 .banner-part {
@@ -91,29 +88,26 @@ body {
     left: 0;
     right: 0;
     width: 100%;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.8s cubic-bezier(.4, 0, .2, 1)
 }
 
-/* Initial state - single unified banner in center (like second image) */
 .banner-part.top-banner {
     top: 35%;
     height: 30%;
-    transform: translateY(0);
+    transform: translateY(0)
 }
 
 .banner-part.bottom-banner {
     top: 35%;
     height: 30%;
     transform: translateY(0);
-    opacity: 0;
-    /* Hide bottom banner initially - shows as single unified banner */
+    opacity: 0
 }
 
-/* When banner splits - opens to top and bottom (like third image) */
 .split-banner.animate-split .banner-part.top-banner {
     top: 0;
     height: 50%;
-    transform: translateY(-25%);
+    transform: translateY(-25%)
 }
 
 .split-banner.animate-split .banner-part.bottom-banner {
@@ -121,11 +115,9 @@ body {
     bottom: 0;
     height: 50%;
     transform: translateY(25%);
-    opacity: 1;
-    /* Show bottom banner when split */
+    opacity: 1
 }
 
-/* Banner text positioning */
 .banner-part .banner-text,
 .banner-part .banner-text-large {
     display: flex;
@@ -133,157 +125,148 @@ body {
     align-items: center;
     justify-content: center;
     height: 100%;
-    gap: 0;
+    gap: 0
 }
 
-/* Text display - initial unified state with marquee (like second image) */
 .banner-part.top-banner .text-part.text-upper,
 .banner-part.top-banner .text-part.text-lower {
     display: block;
     transform: translateY(0);
     line-height: 1.2;
-    animation: bannerTextMarqueeClosed 2.5s linear infinite;
-    /* Both text parts visible together in single unified banner with marquee */
+    animation: bannerTextMarqueeClosed 2.5s linear infinite
 }
 
 .banner-part.bottom-banner .text-part {
-    display: none;
+    display: none
 }
 
-/* When marquee starts in closed state */
 .split-banner.animate-marquee-closed .banner-part.top-banner .text-part.text-upper,
 .split-banner.animate-marquee-closed .banner-part.top-banner .text-part.text-lower {
-    animation: bannerTextMarqueeClosed 3s linear infinite;
+    animation: bannerTextMarqueeClosed 3s linear infinite
 }
 
-/* When split, text parts separate (like third image) */
 .split-banner.animate-split .banner-part.top-banner .text-part.text-upper {
     display: block;
     transform: translateY(-10px);
-    animation: none;
-    /* Initially static, marquee starts via animate-marquee class */
+    animation: none
 }
 
 .split-banner.animate-split .banner-part.top-banner .text-part.text-lower {
-    display: none;
+    display: none
 }
 
 .split-banner.animate-split .banner-part.bottom-banner .text-part.text-upper {
-    display: none;
+    display: none
 }
 
 .split-banner.animate-split .banner-part.bottom-banner .text-part.text-lower {
     display: block;
     transform: translateY(0);
-    animation: none;
-    /* Initially static, marquee starts via animate-marquee class */
+    animation: none
 }
 
-/* When marquee is active after split, banners stay split but text moves */
 .split-banner.animate-marquee .banner-part.top-banner {
-    transform: translateY(-25%);
-    /* Banner stays in split position */
+    transform: translateY(-25%)
 }
 
 .split-banner.animate-marquee .banner-part.bottom-banner {
     transform: translateY(25%);
-    /* Banner stays in split position */
-    opacity: 1;
+    opacity: 1
 }
 
-/* Banner text marquee - text inside banners moves left after split (faster) */
 .split-banner.animate-marquee .banner-part.top-banner .text-part.text-upper {
-    animation: bannerTextMarquee 2.5s linear infinite;
+    animation: bannerTextMarquee 2.5s linear infinite
 }
 
 .split-banner.animate-marquee .banner-part.bottom-banner .text-part.text-lower {
-    animation: bannerTextMarquee 2.5s linear infinite;
+    animation: bannerTextMarquee 2.5s linear infinite
 }
 
 @keyframes bannerTextMarquee {
     0% {
-        transform: translateX(0);
+        transform: translateX(0)
     }
+
     100% {
-        transform: translateX(-100%);
+        transform: translateX(-100%)
     }
 }
 
 @keyframes bannerTextMarqueeClosed {
     0% {
-        transform: translateX(0) translateY(0);
+        transform: translateX(0) translateY(0)
     }
+
     100% {
-        transform: translateX(-100%) translateY(0);
+        transform: translateX(-100%) translateY(0)
     }
 }
 
 @keyframes bannerTextMarqueeSplit {
     0% {
-        transform: translateX(0) translateY(-10px);
+        transform: translateX(0) translateY(-10px)
     }
+
     100% {
-        transform: translateX(-100%) translateY(-10px);
+        transform: translateX(-100%) translateY(-10px)
     }
 }
 
 @keyframes bannerTextMarqueeSplitBottom {
     0% {
-        transform: translateX(0) translateY(0);
+        transform: translateX(0) translateY(0)
     }
+
     100% {
-        transform: translateX(-100%) translateY(0);
+        transform: translateX(-100%) translateY(0)
     }
 }
 
-/* Slide 1 Styles */
 .slide-1 {
-    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)
 }
 
-/* Banner styles - now part of banner-wrapper */
 .banner-part.top-banner,
 .banner-part.bottom-banner {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
+    z-index: 10
 }
 
 .banner-part .banner-text,
 .banner-part .banner-text-large {
     font-size: 8rem;
-    font-weight: bold;
+    font-weight: 700;
     color: #000;
-    letter-spacing: 0.05em;
+    letter-spacing: .05em;
     text-transform: uppercase;
     position: relative;
-    display: inline-block;
+    display: inline-block
 }
 
 .banner-part .banner-text-large {
-    font-size: 6rem;
+    font-size: 6rem
 }
 
 .yellow-banner {
-    background-color: #FFD700;
+    background-color: gold
 }
 
 .pink-banner {
-    background-color: #FF1493;
+    background-color: #FF1493
 }
 
 .banner-text {
     font-size: 8rem;
-    font-weight: bold;
+    font-weight: 700;
     color: #000;
-    letter-spacing: 0.05em;
+    letter-spacing: .05em;
     text-transform: uppercase;
     position: relative;
-    display: inline-block;
+    display: inline-block
 }
 
-/* Text Splitting Animation */
 .split-text {
     display: inline-flex;
     flex-direction: column;
@@ -291,83 +274,82 @@ body {
     justify-content: center;
     position: relative;
     overflow: visible;
-    line-height: 1.2;
+    line-height: 1.2
 }
 
 .text-part {
     display: block;
     position: relative;
     white-space: nowrap;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
-    transform-origin: center;
+    transition: transform 0.6s cubic-bezier(.4, 0, .2, 1), opacity 0.6s ease;
+    transform-origin: center
 }
 
 .text-upper {
     transform: translateY(0) translateX(0);
-    opacity: 1;
+    opacity: 1
 }
 
 .text-lower {
     transform: translateY(0) translateX(0);
-    opacity: 1;
+    opacity: 1
 }
 
-/* When text opens - splits up and down */
 .split-text.animate-open .text-upper {
     transform: translateY(-100px);
     opacity: 1;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+    transition: transform 0.8s cubic-bezier(.4, 0, .2, 1), opacity 0.8s ease
 }
 
 .split-text.animate-open .text-lower {
     transform: translateY(100px);
     opacity: 1;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+    transition: transform 0.8s cubic-bezier(.4, 0, .2, 1), opacity 0.8s ease
 }
 
-/* Marquee effect - continuous leftward movement */
 .split-text.animate-marquee .text-upper {
-    animation: marqueeLeftUpper 3s linear forwards;
+    animation: marqueeLeftUpper 3s linear forwards
 }
 
 .split-text.animate-marquee .text-lower {
-    animation: marqueeLeftLower 3s linear forwards;
+    animation: marqueeLeftLower 3s linear forwards
 }
 
 @keyframes marqueeLeftUpper {
     0% {
-        transform: translateX(0) translateY(-100px);
+        transform: translateX(0) translateY(-100px)
     }
+
     100% {
-        transform: translateX(-100%) translateY(-100px);
+        transform: translateX(-100%) translateY(-100px)
     }
 }
 
 @keyframes marqueeLeftLower {
     0% {
-        transform: translateX(0) translateY(100px);
+        transform: translateX(0) translateY(100px)
     }
+
     100% {
-        transform: translateX(-100%) translateY(100px);
+        transform: translateX(-100%) translateY(100px)
     }
 }
 
-/* When text closes - moves back together */
 .split-text.animate-close .text-upper {
     transform: translateY(0);
     opacity: 1;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+    transition: transform 0.8s cubic-bezier(.4, 0, .2, 1), opacity 0.8s ease
 }
 
 .split-text.animate-close .text-lower {
     transform: translateY(0);
     opacity: 1;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+    transition: transform 0.8s cubic-bezier(.4, 0, .2, 1), opacity 0.8s ease
 }
 
 .split-text.animate-close .text-upper,
 .split-text.animate-close .text-lower {
-    animation: none;
+    animation: none
 }
 
 .open-badge {
@@ -375,8 +357,8 @@ body {
     top: 20px;
     right: 100px;
     font-size: 1.5rem;
-    font-weight: bold;
-    color: #000;
+    font-weight: 700;
+    color: #000
 }
 
 .location-badge {
@@ -387,13 +369,12 @@ body {
     border: 2px solid #000;
     border-radius: 20px;
     font-size: 1rem;
-    font-weight: bold;
-    color: #000;
+    font-weight: 700;
+    color: #000
 }
 
-/* Slide 2 Styles */
 .slide-2 {
-    background: #333;
+    background: #333
 }
 
 .slide-2 .hero-image {
@@ -403,78 +384,73 @@ body {
     background-position: center;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center
 }
 
 .hero-overlay {
     text-align: center;
-    z-index: 10;
+    z-index: 10
 }
 
 .hero-text-small {
-    color: white;
+    color: #fff;
     font-size: 1.2rem;
     margin-bottom: 20px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: .1em
 }
 
 .hero-text-large {
-    color: white;
+    color: #fff;
     font-size: 4rem;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 40px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: .05em;
     position: relative;
-    display: inline-block;
+    display: inline-block
 }
 
 .discover-btn {
-    background: transparent;
-    border: 2px solid white;
+    background: #fff0;
+    border: 2px solid #fff;
     border-radius: 30px;
     padding: 15px 40px;
-    color: white;
+    color: #fff;
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: 700;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s
 }
 
 .discover-btn:hover {
-    background: white;
-    color: #000;
+    background: #fff;
+    color: #000
 }
-
-/* Slide 2 banner styles handled by banner-wrapper */
 
 .location-badge-black {
     padding: 8px 25px;
     background: #000;
     border-radius: 25px;
-    color: white;
-    font-size: 0.9rem;
-    font-weight: bold;
-    text-transform: uppercase;
+    color: #fff;
+    font-size: .9rem;
+    font-weight: 700;
+    text-transform: uppercase
 }
 
-/* Slide 3 Styles */
 .slide-3 {
-    background: #000;
+    background: #000
 }
-
-/* Slide 3 banner styles handled by banner-wrapper */
 
 .banner-text-large {
     font-size: 6rem;
-    font-weight: bold;
+    font-weight: 700;
     color: #000;
-    letter-spacing: 0.05em;
+    letter-spacing: .05em;
     text-transform: uppercase;
     position: relative;
-    display: inline-block;
+    display: inline-block
 }
 
 .hero-section-dark {
@@ -483,111 +459,108 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9));
-    margin-top: 150px;
+    background: linear-gradient(rgb(0 0 0 / .7), rgb(0 0 0 / .9));
+    margin-top: 150px
 }
 
 .hero-content {
     text-align: center;
-    z-index: 10;
+    z-index: 10
 }
 
 .time-text {
-    color: white;
+    color: #fff;
     font-size: 1rem;
     margin-bottom: 20px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: .1em
 }
 
 .main-text {
-    color: white;
+    color: #fff;
     font-size: 4.5rem;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 15px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: .05em;
     position: relative;
-    display: inline-block;
+    display: inline-block
 }
 
 .sub-text {
-    color: white;
+    color: #fff;
     font-size: 1.2rem;
-    margin-bottom: 40px;
+    margin-bottom: 40px
 }
 
 .signup-btn {
-    background: transparent;
-    border: 2px solid white;
+    background: #fff0;
+    border: 2px solid #fff;
     border-radius: 30px;
     padding: 15px 50px;
-    color: white;
+    color: #fff;
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: 700;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s
 }
 
 .signup-btn:hover {
-    background: white;
-    color: #000;
+    background: #fff;
+    color: #000
 }
-
-/* Slide 3 bottom banner handled by banner-wrapper */
 
 .nav-bar {
     display: flex;
     align-items: center;
     gap: 20px;
-    background: rgba(0,0,0,0.8);
+    background: rgb(0 0 0 / .8);
     padding: 15px 30px;
-    border-radius: 5px;
+    border-radius: 5px
 }
 
 .menu-icon {
-    color: white;
+    color: #fff;
     font-size: 1.5rem;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .logo {
-    color: white;
+    color: #fff;
     font-size: 1.5rem;
-    font-weight: bold;
-    text-transform: uppercase;
+    font-weight: 700;
+    text-transform: uppercase
 }
 
 .audio-icon {
-    color: white;
+    color: #fff;
     font-size: 1.2rem;
-    letter-spacing: 2px;
+    letter-spacing: 2px
 }
 
-/* Carousel Indicators */
 .carousel-indicators {
     position: absolute;
     top: 50%;
     left: 35%;
     transform: translateX(-50%);
-    margin-top: 150px; /* Position below center */
+    margin-top: 150px;
     display: flex;
     gap: 15px;
     z-index: 100;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 100%
 }
 
 .indicator {
     width: 40px;
     height: 3px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgb(255 255 255 / .2);
     cursor: pointer;
     transition: all 0.4s ease;
     position: relative;
-    overflow: hidden;
+    overflow: hidden
 }
 
 .indicator::before {
@@ -597,95 +570,191 @@ body {
     left: 0;
     width: 0;
     height: 100%;
-    background: white;
-    transition: width 3s linear;
+    background: #fff;
+    transition: width 3s linear
 }
 
 .indicator.active::before {
-    width: 100%;
+    width: 100%
 }
 
-/* Ensure inactive indicators don't animate backwards */
 .indicator:not(.active)::before {
     width: 0;
-    transition: none;
+    transition: none
 }
 
 .indicator.active {
-    background: rgba(255, 255, 255, 0.8);
-    height: 4px;
+    background: rgb(255 255 255 / .8);
+    height: 4px
 }
 
 .indicator:hover {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgb(255 255 255 / .6)
 }
 
-/* =====================
-   Split Banner Animations
-===================== */
-
 .split-banner {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  pointer-events: none;
-  overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+    overflow: hidden
 }
 
 .banner-part {
-  height: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center
 }
 
 .banner-text,
 .banner-text-large {
-  color: #fff;
-  font-weight: 800;
-  text-transform: uppercase;
+    color: #fff;
+    font-weight: 800;
+    text-transform: uppercase
 }
 
 .animate-marquee-closed .banner-part {
-  transform: translateY(0);
-  transition: transform 0.6s ease-in-out;
+    transform: translateY(0);
+    transition: transform 0.6s ease-in-out
 }
 
 .animate-split .top-banner {
-  transform: translateY(-100%);
-  transition: transform 1s ease-in-out;
+    transform: translateY(-100%);
+    transition: transform 1s ease-in-out
 }
 
 .animate-split .bottom-banner {
-  transform: translateY(100%);
-  transition: transform 1s ease-in-out;
+    transform: translateY(100%);
+    transition: transform 1s ease-in-out
 }
 
 .animate-marquee .top-banner {
-  animation: marqueeTop 5s linear infinite;
+    animation: marqueeTop 5s linear infinite
 }
 
 .animate-marquee .bottom-banner {
-  animation: marqueeBottom 5s linear infinite;
+    animation: marqueeBottom 5s linear infinite
 }
 
 @keyframes marqueeTop {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+    0% {
+        transform: translateX(0)
+    }
+
+    100% {
+        transform: translateX(-50%)
+    }
 }
 
 @keyframes marqueeBottom {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(50%);
-  }
+    0% {
+        transform: translateX(0)
+    }
+
+    100% {
+        transform: translateX(50%)
+    }
+}
+
+@media (max-width:768px) {
+    body {
+        overflow-x: hidden
+    }
+
+    .carousel-container {
+        height: 80vh
+    }
+
+    .banner-part .banner-text,
+    .banner-part .banner-text-large {
+        font-size: 2.2rem !important;
+        letter-spacing: .02em;
+        text-align: center;
+        white-space: normal
+    }
+
+    .split-text .text-upper,
+    .split-text .text-lower {
+        font-size: 1.8rem !important
+    }
+
+    .main-text {
+        font-size: 1.8rem !important
+    }
+
+    .hero-text-large {
+        font-size: 1.6rem !important
+    }
+
+    .hero-text-small {
+        font-size: 0.9rem !important
+    }
+
+    .discover-btn,
+    .signup-btn {
+        padding: 10px 20px;
+        font-size: .8rem
+    }
+
+    .open-badge {
+        right: 15px;
+        top: 10px;
+        font-size: .9rem
+    }
+
+    .location-badge {
+        right: 15px;
+        top: 40px;
+        font-size: .8rem;
+        padding: 4px 12px
+    }
+
+    .carousel-indicators {
+        position: absolute;
+        bottom: 15px;
+        top: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        gap: 8px
+    }
+
+    .indicator {
+        width: 20px;
+        height: 3px
+    }
+
+    .nav-bar {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px
+    }
+
+    .logo {
+        font-size: 1.2rem
+    }
+
+    .audio-icon {
+        font-size: 1rem
+    }
+
+    .split-banner {
+        flex-direction: column;
+        justify-content: center
+    }
+
+    .split-banner .banner-part {
+        height: auto;
+        transform: none !important
+    }
+
+    .split-banner.animate-split .top-banner,
+    .split-banner.animate-split .bottom-banner {
+        transform: none !important
+    }
 }
