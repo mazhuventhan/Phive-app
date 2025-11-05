@@ -1,14 +1,13 @@
-import './App.css'
 import Carousel from './components/carousel'
 import ClassesPage from './components/classSection'
 
 function App() {
 
   return (
-    <>
-    <Carousel/>
-    <ClassesPage/>
-    </>
+    <div className="container-fluid p-0">
+      <Carousel />
+      <ClassesPage />
+    </div>
   )
 }
 
