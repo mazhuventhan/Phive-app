@@ -19,15 +19,23 @@ const Carousel = () => {
     timeoutsRef.current = [];
   };
 
-  const playVideoSafely = (video) => {
+  // Modified: play video and move to next when finished
+  const playVideoSafely = (video, onEnd) => {
     if (!video) return;
     video.muted = true;
     const container = video.closest(".video-container");
+
     const tryPlay = () => {
-      video.play().then(() => {
-        if (container) container.classList.add("playing");
-      }).catch(() => {});
+      video.play()
+        .then(() => {
+          if (container) container.classList.add("playing");
+          if (onEnd) {
+            video.onended = onEnd;
+          }
+        })
+        .catch(() => {});
     };
+
     if (video.readyState >= 3) tryPlay();
     else video.addEventListener("canplay", tryPlay, { once: true });
   };
@@ -39,25 +47,21 @@ const Carousel = () => {
     if (container) container.classList.remove("playing");
   };
 
-  const startMarqueeClosed = (slide) => {
-    const banners = slide.querySelectorAll(".split-banner");
-    banners.forEach((b) => b.classList.add("animate-marquee-closed"));
-  };
-
-  const openText = (slide) => {
+  // 🔥 simplified animation flow
+  const triggerBannerSequence = (slide) => {
     const banners = slide.querySelectorAll(".split-banner");
     banners.forEach((b) => {
-      b.classList.remove("animate-marquee-closed");
-      b.classList.add("animate-split");
+      b.classList.remove("animate-marquee", "animate-split", "animate-marquee-closed");
+      b.classList.add("animate-marquee-closed");
     });
-  };
 
-  const startMarquee = (slide) => {
-    const banners = slide.querySelectorAll(".split-banner");
-    banners.forEach((b) => {
-      b.classList.remove("animate-split");
-      b.classList.add("animate-marquee");
-    });
+    // open split once after small delay
+    setTimeout(() => {
+      banners.forEach((b) => {
+        b.classList.remove("animate-marquee-closed");
+        b.classList.add("animate-split");
+      });
+    }, 1000);
   };
 
   const showSlide = (index, animate = true) => {
@@ -74,10 +78,14 @@ const Carousel = () => {
         slide.classList.add("active");
         slide.style.transform = "translateX(0)";
         slide.style.opacity = "1";
-        playVideoSafely(video);
-        startMarqueeClosed(slide);
-        setTimeout(() => openText(slide), 1000);
-        setTimeout(() => startMarquee(slide), 3000);
+
+        triggerBannerSequence(slide);
+
+        // ✅ move to next slide after video ends
+        playVideoSafely(video, () => {
+          const next = (index + 1) % totalSlides;
+          showSlide(next, true);
+        });
       } else {
         slide.classList.remove("active");
         slide.style.transform = "translateX(100%)";
@@ -99,17 +107,8 @@ const Carousel = () => {
     }
   };
 
-  const nextIndicator = () => {
-    const currentIndex = currentIndexRef.current;
-    const next = (currentIndex + 1) % totalSlides;
-    currentIndexRef.current = next;
-    showSlide(next, true);
-    timeoutsRef.current.push(setTimeout(nextIndicator, 7000));
-  };
-
   useEffect(() => {
     showSlide(0, false);
-    timeoutsRef.current.push(setTimeout(nextIndicator, 7000));
     return () => clearAllTimeouts();
   }, []);
 
@@ -137,7 +136,6 @@ const Carousel = () => {
                 muted
                 playsInline
                 preload="auto"
-                onLoadedData={(e) => e.target.play().catch(() => {})}
               >
                 <source src={video1} type="video/mp4" />
               </video>
@@ -166,7 +164,6 @@ const Carousel = () => {
                 muted
                 playsInline
                 preload="auto"
-                onLoadedData={(e) => e.target.play().catch(() => {})}
               >
                 <source src={video2} type="video/mp4" />
               </video>
@@ -195,7 +192,6 @@ const Carousel = () => {
                 muted
                 playsInline
                 preload="auto"
-                onLoadedData={(e) => e.target.play().catch(() => {})}
               >
                 <source src={video1} type="video/mp4" />
               </video>
