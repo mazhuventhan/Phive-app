@@ -3,6 +3,7 @@ import "../class.css";
 
 const ClassesPage = () => {
   const fixedDescriptionRef = useRef(null);
+  const stickyTitleRef = useRef(null);
 
   useEffect(() => {
     const titleElement = document.querySelector(".sticky-title span");
@@ -25,6 +26,21 @@ const ClassesPage = () => {
         el.style.opacity = i < visibleLetters ? "1" : "0.1";
         el.style.transform = i < visibleLetters ? "translateY(0)" : "translateY(1rem)";
       });
+
+      // Hide sticky-title (CLASSES text) when in banner/carousel area
+      if (stickyTitleRef.current) {
+        if (scrollY < bannerHeight) {
+          // In banner area - hide CLASSES text
+          stickyTitleRef.current.style.opacity = "0";
+          stickyTitleRef.current.style.visibility = "hidden";
+          stickyTitleRef.current.style.pointerEvents = "none";
+        } else {
+          // Out of banner area - show CLASSES text
+          stickyTitleRef.current.style.opacity = "1";
+          stickyTitleRef.current.style.visibility = "visible";
+          stickyTitleRef.current.style.pointerEvents = "auto";
+        }
+      }
 
       // Hide fixed-description when in banner area
       if (fixedDescriptionRef.current) {
@@ -52,7 +68,7 @@ const ClassesPage = () => {
 
   return (
     <main className="classes-section">
-      <h1 className="sticky-title">
+      <h1 className="sticky-title" ref={stickyTitleRef}>
         <span aria-hidden="true">CLASSES</span>
       </h1>
 

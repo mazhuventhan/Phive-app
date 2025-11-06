@@ -4,8 +4,15 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   width: 100%;
+  overflow-x: hidden;
+  touch-action: pan-y;
 }
 
 .carousel-container {
@@ -13,6 +20,7 @@ body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  touch-action: pan-y;
 }
 
 .carousel-wrapper {
@@ -53,6 +61,7 @@ body {
   height: 100%;
   position: relative;
   overflow: hidden;
+  touch-action: pan-y;
 }
 
 .video-container {
@@ -89,7 +98,11 @@ body {
   left: 0;
   right: 0;
   width: 100%;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              top 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              bottom 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              height 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* 🔧 Shorter top/bottom sections for better video visibility */
@@ -141,6 +154,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   position: relative;
+  touch-action: none;
 }
 
 .banner-part .banner-text .text-wrapper,
@@ -148,27 +162,80 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  animation: textMarqueeAndSlide 15s linear infinite;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
   will-change: transform;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  touch-action: none;
 }
 
 .banner-part .banner-text .text-wrapper span,
 .banner-part .banner-text-large .text-wrapper span {
   display: inline-block;
-  padding-right: 0.2em;
+  padding-right: 2em;
+  position: relative;
+  animation: rotateRevealMarquee 2s linear infinite;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
-@keyframes textMarqueeAndSlide {
+.banner-part .banner-text .text-wrapper span:nth-child(2),
+.banner-part .banner-text-large .text-wrapper span:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+@keyframes rotateRevealMarquee {
   0% {
-    transform: translateX(0) translateY(0);
+    transform: translateX(0) translateY(0) rotateX(90deg);
+    opacity: 0;
   }
-  
+  10% {
+    transform: translateX(-5%) translateY(0) rotateX(45deg);
+    opacity: 0.5;
+  }
+  15% {
+    transform: translateX(-7.5%) translateY(0) rotateX(0deg);
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(-10%) translateY(0) rotateX(0deg);
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(-15%) translateY(0) rotateX(0deg);
+    opacity: 1;
+  }
+  40% {
+    transform: translateX(-20%) translateY(0) rotateX(0deg);
+    opacity: 1;
+  }
   50% {
-    transform: translateX(-25%) translateY(0);
+    transform: translateX(-25%) translateY(0) rotateX(0deg);
+    opacity: 1;
   }
- 
+  60% {
+    transform: translateX(-30%) translateY(0) rotateX(0deg);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(-35%) translateY(0) rotateX(0deg);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(-40%) translateY(0) rotateX(0deg);
+    opacity: 1;
+  }
+  90% {
+    transform: translateX(-45%) translateY(0) rotateX(0deg);
+    opacity: 1;
+  }
   100% {
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(0) rotateX(0deg);
+    opacity: 1;
   }
 }
 
@@ -251,11 +318,19 @@ body {
   width: 0;
   height: 100%;
   background: #fff;
-  transition: width 3s linear;
+  transition: none;
+  animation: none;
 }
 
 .indicator.active::before {
-  width: 100%;
+  width: 0;
+  animation: indicatorFill var(--video-duration, 5s) linear forwards;
+}
+
+.indicator:not(.active)::before {
+  width: 0 !important;
+  animation: none !important;
+  transition: none !important;
 }
 
 .indicator.active {
@@ -267,14 +342,36 @@ body {
   background: rgb(255 255 255 / 0.6);
 }
 
+@keyframes indicatorFill {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
 /* 🧩 Responsive Design */
 @media (max-width: 768px) {
   body {
+    overflow-x: hidden;
+    touch-action: pan-y;
+    position: relative;
+  }
+
+  html {
     overflow-x: hidden;
   }
 
   .carousel-container {
     height: 80vh;
+    overflow-x: hidden;
+    touch-action: pan-y;
+  }
+
+  .carousel-wrapper {
+    overflow-x: hidden;
+    touch-action: pan-y;
   }
 
   .banner-part .banner-text,
@@ -316,60 +413,5 @@ body {
   .indicator {
     width: 20px;
     height: 3px;
-  }
-}
-/* ===============================
-   Smooth Split + 3D Text Animation
-   =============================== */
-
-/* smooth split opening */
-.animate-split .banner-part {
-  transform-origin: center;
-  transition: transform 2s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-.animate-split .top-banner {
-  transform: translateY(-50%);
-}
-
-.animate-split .bottom-banner {
-  transform: translateY(50%);
-}
-
-/* when closed */
-.animate-marquee-closed .top-banner,
-.animate-marquee-closed .bottom-banner {
-  transform: translateY(0);
-}
-
-/* text wrapper letter spacing */
-.text-wrapper {
-  display: inline-block;
-}
-.text-wrapper span {
-  display: inline-block;
-  letter-spacing: 0.2em;
-}
-
-/* 3D letter flip animation */
-.letter-3d {
-  display: inline-block;
-  transform: rotateX(90deg) translateY(20px);
-  opacity: 0;
-  animation: letterRise 0.8s forwards cubic-bezier(0.45, 0, 0.55, 1);
-}
-
-@keyframes letterRise {
-  0% {
-    transform: rotateX(90deg) translateY(20px);
-    opacity: 0;
-  }
-  50% {
-    transform: rotateX(45deg) translateY(-4px);
-    opacity: 0.6;
-  }
-  100% {
-    transform: rotateX(0deg) translateY(0);
-    opacity: 1;
   }
 }
