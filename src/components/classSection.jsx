@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import "../class.css";
 
 const ClassesPage = () => {
@@ -13,7 +13,7 @@ const ClassesPage = () => {
       .join("");
 
     const letterElements = document.querySelectorAll(".letter");
-    const bannerHeight = window.innerHeight; // Carousel is 100vh
+    const bannerHeight = window.innerHeight;
 
     const onScroll = () => {
       const scrollY = window.scrollY;
@@ -27,41 +27,31 @@ const ClassesPage = () => {
         el.style.transform = i < visibleLetters ? "translateY(0)" : "translateY(1rem)";
       });
 
-      // Hide sticky-title (CLASSES text) when in banner/carousel area
       if (stickyTitleRef.current) {
         if (scrollY < bannerHeight) {
-          // In banner area - hide CLASSES text
           stickyTitleRef.current.style.opacity = "0";
           stickyTitleRef.current.style.visibility = "hidden";
           stickyTitleRef.current.style.pointerEvents = "none";
         } else {
-          // Out of banner area - show CLASSES text
           stickyTitleRef.current.style.opacity = "1";
           stickyTitleRef.current.style.visibility = "visible";
           stickyTitleRef.current.style.pointerEvents = "auto";
         }
       }
-
-      // Hide fixed-description when in banner area
       if (fixedDescriptionRef.current) {
         const descriptionP = fixedDescriptionRef.current.querySelector("p");
         if (descriptionP) {
           if (scrollY < bannerHeight) {
-            // In banner area - hide
             descriptionP.style.opacity = "0";
             descriptionP.style.visibility = "hidden";
           } else {
-            // Out of banner area - show
             descriptionP.style.opacity = "1";
             descriptionP.style.visibility = "visible";
           }
         }
       }
     };
-
-    // Initial check
     onScroll();
-
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);

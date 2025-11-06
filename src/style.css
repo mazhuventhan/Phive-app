@@ -1,18 +1,17 @@
+body,
+html {
+  overflow-x: hidden;
+  width: 100%
+}
+
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  overflow-x: hidden;
-  width: 100%;
+  box-sizing: border-box
 }
 
 body {
-  width: 100%;
-  overflow-x: hidden;
-  touch-action: pan-y;
+  touch-action: pan-y
 }
 
 .carousel-container {
@@ -20,77 +19,79 @@ body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  touch-action: pan-y;
+  touch-action: pan-y
+}
+
+.banner-wrapper,
+.carousel-slide,
+.carousel-wrapper,
+.hero-video,
+.slide-content,
+.video-container {
+  height: 100%;
+  width: 100%
 }
 
 .carousel-wrapper {
   position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
+  display: flex
 }
 
 .carousel-slide {
   position: absolute;
-  width: 100%;
-  height: 100%;
   top: 0;
   left: 0;
   opacity: 0;
   transform: translateX(100%);
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.8s ease-in-out;
+  transition: transform .8s cubic-bezier(.4, 0, .2, 1), opacity .8s ease-in-out;
   will-change: transform, opacity;
-  z-index: 1;
+  z-index: 1
 }
 
 .carousel-slide.active {
   opacity: 1;
   transform: translateX(0);
-  z-index: 3;
+  z-index: 3
 }
 
 .carousel-slide.prev {
   transform: translateX(-100%);
   opacity: 0;
-  z-index: 1;
+  z-index: 1
+}
+
+.banner-part.bottom-banner,
+.banner-part.top-banner {
+  top: 35%;
+  transform: translateY(0)
 }
 
 .slide-content {
-  width: 100%;
-  height: 100%;
   position: relative;
   overflow: hidden;
-  touch-action: pan-y;
+  touch-action: pan-y
 }
 
 .video-container {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   z-index: 1;
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity .8s
 }
 
 .video-container.playing {
-  opacity: 1;
+  opacity: 1
 }
 
 .hero-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  object-fit: cover
 }
 
-/* 🟡 Banners */
 .banner-wrapper {
   position: relative;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
+  z-index: 2
 }
 
 .banner-part {
@@ -98,35 +99,22 @@ body {
   left: 0;
   right: 0;
   width: 100%;
-  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              top 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              bottom 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              height 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 1.2s cubic-bezier(.25, .46, .45, .94), top 1.2s cubic-bezier(.25, .46, .45, .94), bottom 1.2s cubic-bezier(.25, .46, .45, .94), height 1.2s cubic-bezier(.25, .46, .45, .94), opacity 1.2s cubic-bezier(.25, .46, .45, .94)
 }
 
-/* 🔧 Shorter top/bottom sections for better video visibility */
-.banner-part.top-banner,
-.banner-part.bottom-banner {
-  height: 22%; /* was 30% */
-}
-
+.banner-part.bottom-banner,
 .banner-part.top-banner {
-  top: 35%;
-  transform: translateY(0);
+  height: 22%
 }
 
 .banner-part.bottom-banner {
-  top: 35%;
-  transform: translateY(0);
-  opacity: 0;
+  opacity: 0
 }
 
-/* When split open */
 .split-banner.animate-split .banner-part.top-banner {
   top: -14px;
   height: 20%;
-  transform: translateY(10%) !important; /* smaller shift */
+  transform: translateY(10%) !important
 }
 
 .split-banner.animate-split .banner-part.bottom-banner {
@@ -134,10 +122,9 @@ body {
   bottom: 0;
   height: 20%;
   transform: translateY(10%) !important;
-  opacity: 1;
+  opacity: 1
 }
 
-/* Text */
 .banner-part .banner-text,
 .banner-part .banner-text-large {
   display: flex;
@@ -149,12 +136,12 @@ body {
   font-size: 8rem;
   font-weight: 700;
   color: #000;
-  letter-spacing: 0.05em;
+  letter-spacing: .05em;
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
   position: relative;
-  touch-action: none;
+  touch-action: none
 }
 
 .banner-part .banner-text .text-wrapper,
@@ -169,7 +156,7 @@ body {
   will-change: transform;
   perspective: 1000px;
   transform-style: preserve-3d;
-  touch-action: none;
+  touch-action: none
 }
 
 .banner-part .banner-text .text-wrapper span,
@@ -177,115 +164,125 @@ body {
   display: inline-block;
   padding-right: 2em;
   position: relative;
-  animation: rotateRevealMarquee 2s linear infinite;
+  animation: 2s linear infinite rotateRevealMarquee;
   transform-origin: center center;
   transform-style: preserve-3d;
-  backface-visibility: hidden;
+  backface-visibility: hidden
 }
 
 .banner-part .banner-text .text-wrapper span:nth-child(2),
 .banner-part .banner-text-large .text-wrapper span:nth-child(2) {
-  animation-delay: 0.3s;
+  animation-delay: .3s
 }
 
 @keyframes rotateRevealMarquee {
   0% {
     transform: translateX(0) translateY(0) rotateX(90deg);
-    opacity: 0;
+    opacity: 0
   }
+
   10% {
     transform: translateX(-5%) translateY(0) rotateX(45deg);
-    opacity: 0.5;
+    opacity: .5
   }
+
   15% {
-    transform: translateX(-7.5%) translateY(0) rotateX(0deg);
-    opacity: 1;
+    transform: translateX(-7.5%) translateY(0) rotateX(0);
+    opacity: 1
   }
+
   20% {
-    transform: translateX(-10%) translateY(0) rotateX(0deg);
-    opacity: 1;
+    transform: translateX(-10%) translateY(0) rotateX(0);
+    opacity: 1
   }
+
   30% {
-    transform: translateX(-15%) translateY(0) rotateX(0deg);
-    opacity: 1;
+    transform: translateX(-15%) translateY(0) rotateX(0);
+    opacity: 1
   }
+
   40% {
-    transform: translateX(-20%) translateY(0) rotateX(0deg);
-    opacity: 1;
+    transform: translateX(-20%) translateY(0) rotateX(0);
+    opacity: 1
   }
+
   50% {
-    transform: translateX(-25%) translateY(0) rotateX(0deg);
-    opacity: 1;
+    transform: translateX(-25%) translateY(0) rotateX(0);
+    opacity: 1
   }
+
   60% {
-    transform: translateX(-30%) translateY(0) rotateX(0deg);
-    opacity: 1;
+    transform: translateX(-30%) translateY(0) rotateX(0);
+    opacity: 1
   }
+
   70% {
-    transform: translateX(-35%) translateY(0) rotateX(0deg);
-    opacity: 1;
+    transform: translateX(-35%) translateY(0) rotateX(0);
+    opacity: 1
   }
+
   80% {
-    transform: translateX(-40%) translateY(0) rotateX(0deg);
-    opacity: 1;
+    transform: translateX(-40%) translateY(0) rotateX(0);
+    opacity: 1
   }
+
   90% {
-    transform: translateX(-45%) translateY(0) rotateX(0deg);
-    opacity: 1;
+    transform: translateX(-45%) translateY(0) rotateX(0);
+    opacity: 1
   }
+
   100% {
-    transform: translateX(-50%) translateY(0) rotateX(0deg);
-    opacity: 1;
+    transform: translateX(-50%) translateY(0) rotateX(0);
+    opacity: 1
   }
 }
 
 .yellow-banner {
-  background-color: rgb(223, 192, 21);
+  background-color: #dfc015
 }
+
 .pink-banner {
-  background-color: #b76eff;
+  background-color: #b76eff
 }
 
+.split-banner.animate-marquee-closed .bottom-banner,
 .split-banner.animate-marquee-closed .top-banner {
-  animation: none;
-}
-.split-banner.animate-marquee-closed .bottom-banner {
-  animation: none;
+  animation: none
 }
 
-/* Split state - pause marquee */
-.split-banner.animate-split .top-banner,
-.split-banner.animate-split .bottom-banner {
-  animation: none !important;
+.split-banner.animate-split .bottom-banner,
+.split-banner.animate-split .top-banner {
+  animation: none !important
 }
 
-/* Active marquee scrolling */
 .animate-marquee .top-banner {
-  animation: marqueeTop 5s linear infinite !important;
+  animation: 5s linear infinite marqueeTop !important
 }
+
 .animate-marquee .bottom-banner {
-  animation: marqueeBottom 5s linear infinite !important;
+  animation: 5s linear infinite marqueeBottom !important
 }
 
 @keyframes marqueeTop {
   0% {
-    transform: translateX(0);
+    transform: translateX(0)
   }
+
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-50%)
   }
 }
 
 @keyframes marqueeBottom {
   0% {
-    transform: translateX(0);
+    transform: translateX(0)
   }
+
   100% {
-    transform: translateX(50%);
+    transform: translateX(50%)
   }
 }
 
-/* Carousel indicators */
 .carousel-indicators {
   position: absolute;
   top: 20%;
@@ -297,17 +294,17 @@ body {
   z-index: 100;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 100%
 }
 
 .indicator {
   width: 40px;
   height: 3px;
-  background: rgb(255 255 255 / 0.2);
+  background: rgb(255 255 255 / .2);
   cursor: pointer;
-  transition: all 0.4s ease;
+  transition: .4s;
   position: relative;
-  overflow: hidden;
+  overflow: hidden
 }
 
 .indicator::before {
@@ -319,86 +316,85 @@ body {
   height: 100%;
   background: #fff;
   transition: none;
-  animation: none;
+  animation: none
 }
 
 .indicator.active::before {
   width: 0;
-  animation: indicatorFill var(--video-duration, 5s) linear forwards;
+  animation: indicatorFill var(--video-duration, 5s) linear forwards
 }
 
 .indicator:not(.active)::before {
   width: 0 !important;
   animation: none !important;
-  transition: none !important;
+  transition: none !important
 }
 
 .indicator.active {
-  background: rgb(255 255 255 / 0.8);
-  height: 4px;
+  background: rgb(255 255 255 / .8);
+  height: 4px
 }
 
 .indicator:hover {
-  background: rgb(255 255 255 / 0.6);
+  background: rgb(255 255 255 / .6)
 }
 
 @keyframes indicatorFill {
   0% {
-    width: 0;
+    width: 0
   }
+
   100% {
-    width: 100%;
+    width: 100%
   }
 }
 
-/* 🧩 Responsive Design */
-@media (max-width: 768px) {
+@media (max-width:768px) {
+
+  .carousel-container,
+  .carousel-wrapper,
   body {
     overflow-x: hidden;
-    touch-action: pan-y;
-    position: relative;
+    touch-action: pan-y
+  }
+
+  body {
+    position: relative
   }
 
   html {
-    overflow-x: hidden;
+    overflow-x: hidden
   }
 
   .carousel-container {
-    height: 80vh;
-    overflow-x: hidden;
-    touch-action: pan-y;
-  }
-
-  .carousel-wrapper {
-    overflow-x: hidden;
-    touch-action: pan-y;
+    height: 80vh
   }
 
   .banner-part .banner-text,
   .banner-part .banner-text-large {
     font-size: 2rem !important;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
+    letter-spacing: .02em;
+    white-space: nowrap
   }
-  
+
   .banner-part .banner-text .text-wrapper,
   .banner-part .banner-text-large .text-wrapper {
-    animation: textMarqueeAndSlide 10s linear infinite;
+    animation: 10s linear infinite textMarqueeAndSlide
   }
 
   .split-banner {
     flex-direction: column;
-    justify-content: center;
+    justify-content: center
   }
 
   .split-banner .banner-part {
     height: auto;
-    transform: none !important;
+    transform: none !important
   }
 
-  .split-banner.animate-split .top-banner,
-  .split-banner.animate-split .bottom-banner {
-    transform: none !important;
+  .split-banner.animate-split .bottom-banner,
+  .split-banner.animate-split .top-banner {
+    transform: none !important
   }
 
   .carousel-indicators {
@@ -407,11 +403,59 @@ body {
     top: auto;
     left: 50%;
     transform: translateX(-50%);
-    gap: 8px;
+    gap: 8px
   }
 
   .indicator {
     width: 20px;
-    height: 3px;
+    height: 3px
   }
+}
+
+.banner-text .text-wrapper span,
+.banner-text-large .text-wrapper span {
+  display: inline-block;
+  position: relative;
+  perspective: 800px
+}
+
+.banner-text .text-wrapper span::after,
+.banner-text-large .text-wrapper span::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  animation: 4s ease-in-out infinite rotateEachLetter
+}
+
+@keyframes rotateEachLetter {
+
+  0%,
+  10% {
+    transform: rotateX(90deg);
+    opacity: 0
+  }
+
+  20%,
+  80% {
+    transform: rotateX(0);
+    opacity: 1
+  }
+
+  100%,
+  90% {
+    transform: rotateX(-90deg);
+    opacity: 0
+  }
+}
+
+.banner-text .text-wrapper span[data-text]::after,
+.banner-text-large .text-wrapper span[data-text]::after {
+  animation-delay: calc(var(--char-index, 0) * .15s)
 }
