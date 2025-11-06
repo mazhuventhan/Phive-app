@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "../class.css";
 
 const ClassesPage = () => {
+  const fixedDescriptionRef = useRef(null);
+
   useEffect(() => {
     const titleElement = document.querySelector(".sticky-title span");
     const letters = "CLASSES".split("");
@@ -10,10 +12,12 @@ const ClassesPage = () => {
       .join("");
 
     const letterElements = document.querySelectorAll(".letter");
+    const bannerHeight = window.innerHeight; // Carousel is 100vh
 
     const onScroll = () => {
+      const scrollY = window.scrollY;
       const scrollProgress =
-        window.scrollY / (document.body.scrollHeight - window.innerHeight);
+        scrollY / (document.body.scrollHeight - window.innerHeight);
       const totalLetters = letterElements.length;
       const visibleLetters = Math.floor(scrollProgress * (totalLetters + 1));
 
@@ -21,7 +25,26 @@ const ClassesPage = () => {
         el.style.opacity = i < visibleLetters ? "1" : "0.1";
         el.style.transform = i < visibleLetters ? "translateY(0)" : "translateY(1rem)";
       });
+
+      // Hide fixed-description when in banner area
+      if (fixedDescriptionRef.current) {
+        const descriptionP = fixedDescriptionRef.current.querySelector("p");
+        if (descriptionP) {
+          if (scrollY < bannerHeight) {
+            // In banner area - hide
+            descriptionP.style.opacity = "0";
+            descriptionP.style.visibility = "hidden";
+          } else {
+            // Out of banner area - show
+            descriptionP.style.opacity = "1";
+            descriptionP.style.visibility = "visible";
+          }
+        }
+      }
     };
+
+    // Initial check
+    onScroll();
 
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
@@ -33,7 +56,7 @@ const ClassesPage = () => {
         <span aria-hidden="true">CLASSES</span>
       </h1>
 
-      <div className="fixed-description">
+      <div className="fixed-description" ref={fixedDescriptionRef}>
         <p>
           THE MOST EXCITING CLASSES, CREATED BY TOP INSTRUCTORS. NO MATTER YOUR
           GOAL, WE CAN MAKE IT HAPPEN.

@@ -19,6 +19,7 @@ const Carousel = () => {
     timeoutsRef.current = [];
   };
 
+  // Modified: play video and move to next when finished
   const playVideoSafely = (video, onEnd) => {
     if (!video) return;
     video.muted = true;
@@ -46,25 +47,21 @@ const Carousel = () => {
     if (container) container.classList.remove("playing");
   };
 
-  // 🚀 Sequence: Center (initial) -> Split Open (after delay)
+  // 🔥 simplified animation flow
   const triggerBannerSequence = (slide) => {
     const banners = slide.querySelectorAll(".split-banner");
-
     banners.forEach((b) => {
-      // 1. Ensure marquee is ALWAYS running (start text scrolling immediately)
-      b.classList.remove("animate-split");
-      b.classList.add("animate-marquee");
+      b.classList.remove("animate-marquee", "animate-split", "animate-marquee-closed");
+      b.classList.add("animate-marquee-closed");
     });
 
-    // 2. Trigger the smooth transition to the split state after a delay
-    const splitTimeout = setTimeout(() => {
+    // open split once after small delay
+    setTimeout(() => {
       banners.forEach((b) => {
-        // This class applies the top:0 and bottom:0 positioning in CSS
+        b.classList.remove("animate-marquee-closed");
         b.classList.add("animate-split");
       });
-    }, 1000); // 1 second delay to showcase the center marquee before splitting
-
-    timeoutsRef.current.push(splitTimeout);
+    }, 1000);
   };
 
   const showSlide = (index, animate = true) => {
@@ -73,37 +70,25 @@ const Carousel = () => {
       return;
     }
     const previousIndex = currentSlide;
-    const isNewSlide = previousIndex !== index;
-    
-    clearAllTimeouts(); 
-
-    setIsTransitioning(animate && isNewSlide);
+    setIsTransitioning(animate && previousIndex !== index);
 
     slidesRef.current.forEach((slide, i) => {
       const video = slide.querySelector(".hero-video");
-      const banners = slide.querySelectorAll(".split-banner");
-      
-      // Reset banners to the initial state (Center-Combined, Marquee off initially)
-      banners.forEach((b) => {
-          b.classList.remove("animate-split", "animate-marquee");
-      });
-
       if (i === index) {
         slide.classList.add("active");
         slide.style.transform = "translateX(0)";
         slide.style.opacity = "1";
 
-        // Trigger the animation sequence: Center Marquee -> Split
         triggerBannerSequence(slide);
 
-        // Move to next slide after video ends
+        // ✅ move to next slide after video ends
         playVideoSafely(video, () => {
           const next = (index + 1) % totalSlides;
           showSlide(next, true);
         });
       } else {
         slide.classList.remove("active");
-        slide.style.transform = isNewSlide && i < index ? "translateX(-100%)" : "translateX(100%)";
+        slide.style.transform = "translateX(100%)";
         slide.style.opacity = "0";
         pauseVideo(video);
       }
@@ -115,7 +100,7 @@ const Carousel = () => {
       el.classList.toggle("active", i === index);
     });
 
-    if (animate && isNewSlide) {
+    if (animate && previousIndex !== index) {
       setTimeout(() => setIsTransitioning(false), 800);
     } else {
       setIsTransitioning(false);
@@ -136,12 +121,18 @@ const Carousel = () => {
             <div className="banner-wrapper split-banner">
               <div className="top-banner yellow-banner banner-part">
                 <div className="banner-text">
-                  <span>PHIVE PORTO</span>
+                  <div className="text-wrapper">
+                    <span>PHIVE PORTO</span>
+                    <span>PHIVE PORTO</span>
+                  </div>
                 </div>
               </div>
               <div className="bottom-banner yellow-banner banner-part">
                 <div className="banner-text">
-                  <span>PHIVE PORTO</span>
+                  <div className="text-wrapper">
+                    <span>PHIVE PORTO</span>
+                    <span>PHIVE PORTO</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -164,12 +155,18 @@ const Carousel = () => {
             <div className="banner-wrapper split-banner">
               <div className="top-banner yellow-banner banner-part">
                 <div className="banner-text">
-                  <span>PHIVE</span>
+                  <div className="text-wrapper">
+                    <span>PHIVE</span>
+                    <span>PHIVE</span>
+                  </div>
                 </div>
               </div>
               <div className="bottom-banner yellow-banner banner-part">
                 <div className="banner-text">
-                  <span>PORTO</span>
+                  <div className="text-wrapper">
+                    <span>PORTO</span>
+                    <span>PORTO</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -192,12 +189,18 @@ const Carousel = () => {
             <div className="banner-wrapper split-banner">
               <div className="top-banner pink-banner banner-part">
                 <div className="banner-text-large">
-                  <span>TRAIN</span>
+                  <div className="text-wrapper">
+                    <span>TRAIN</span>
+                    <span>TRAIN</span>
+                  </div>
                 </div>
               </div>
               <div className="bottom-banner pink-banner banner-part">
                 <div className="banner-text-large">
-                  <span>EVERY DAY</span>
+                  <div className="text-wrapper">
+                    <span>EVERY DAY</span>
+                    <span>EVERY DAY</span>
+                  </div>
                 </div>
               </div>
             </div>

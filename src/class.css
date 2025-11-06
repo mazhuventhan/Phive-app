@@ -204,6 +204,10 @@ section p {
     z-index: 90
 }
 
+.fixed-description p {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
 section {
     position: relative
 }
