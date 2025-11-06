@@ -90,48 +90,55 @@ body {
   left: 0;
   right: 0;
   width: 100%;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Crucial for smooth split transition */
+  transition: top 1s cubic-bezier(0.4, 0, 0.2, 1),
+    bottom 1s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 🔧 Shorter top/bottom sections for better video visibility */
+/* 💥 Initial State (Center Combined) 💥 */
 .banner-part.top-banner,
 .banner-part.bottom-banner {
-  height: 22%; /* was 30% */
-}
-
-.banner-part.top-banner {
+  height: 22%;
+  /* Vertically center position for the combined block (approx 35%) */
   top: 35%;
-  transform: translateY(0);
+  opacity: 1;
 }
 
 .banner-part.bottom-banner {
-  top: 35%;
-  transform: translateY(0);
-  opacity: 0;
+  /* Stacked right below the top banner, creating a combined block */
+  top: calc(35% + 22%);
+  opacity: 1;
 }
 
-/* When split open */
+/* --- State: Split Open (triggered by .animate-split) --- */
 .split-banner.animate-split .banner-part.top-banner {
   top: 0;
+  /* Move to top edge */
   height: 20%;
-  transform: translateY(10%) !important; /* smaller shift */
+  transform: translateY(10%) !important;
+  /* Small visual shift */
 }
 
 .split-banner.animate-split .banner-part.bottom-banner {
   top: auto;
+  /* Reset top */
   bottom: 0;
+  /* Move to bottom edge */
   height: 20%;
-  transform: translateY(10%) !important;
+  transform: translateY(-10%) !important;
+  /* Small visual shift */
   opacity: 1;
 }
 
-/* Text */
+/* Text Container */
 .banner-part .banner-text,
 .banner-part .banner-text-large {
+  width: 200%;
+  /* Must be wider than parent to allow continuous scrolling */
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100%;
   font-size: 8rem;
   font-weight: 700;
@@ -139,44 +146,44 @@ body {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   text-align: center;
+  white-space: nowrap;
 }
+
+/* Text Spans (add spacing for seamless loop) */
+.banner-part .banner-text span,
+.banner-part .banner-text-large span {
+  padding-right: 2em;
+}
+
 
 /* Colors */
 .yellow-banner {
   background-color: gold;
 }
+
 .pink-banner {
   background-color: #ff1493;
 }
 
-/* 🌀 Animations */
-.split-banner.animate-marquee-closed .top-banner {
-  animation: marqueeTop 8s linear infinite;
-}
-.split-banner.animate-marquee-closed .bottom-banner {
-  animation: marqueeBottom 8s linear infinite;
+/* 🌀 Animations: Apply marquee to the text container when .animate-marquee is present */
+.split-banner.animate-marquee .top-banner .banner-text,
+.split-banner.animate-marquee .top-banner .banner-text-large {
+  animation: marqueeTop 5s linear infinite;
 }
 
-/* Split state - pause marquee */
-.split-banner.animate-split .top-banner,
-.split-banner.animate-split .bottom-banner {
-  animation: none !important;
-}
-
-/* Active marquee scrolling */
-.animate-marquee .top-banner {
-  animation: marqueeTop 5s linear infinite !important;
-}
-.animate-marquee .bottom-banner {
-  animation: marqueeBottom 5s linear infinite !important;
+.split-banner.animate-marquee .bottom-banner .banner-text,
+.split-banner.animate-marquee .bottom-banner .banner-text-large {
+  animation: marqueeBottom 5s linear infinite;
 }
 
 @keyframes marqueeTop {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
+    /* Scroll left */
   }
 }
 
@@ -184,8 +191,10 @@ body {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(50%);
+    /* Scroll right */
   }
 }
 
@@ -253,22 +262,32 @@ body {
     font-size: 2rem !important;
     letter-spacing: 0.02em;
     text-align: center;
-    white-space: normal;
+    white-space: nowrap;
+    width: 250%;
   }
 
-  .split-banner {
-    flex-direction: column;
-    justify-content: center;
+  /* Responsive Initial State (Center Combined) */
+  .banner-part.top-banner,
+  .banner-part.bottom-banner {
+    height: 15%;
+    top: 40%;
   }
 
-  .split-banner .banner-part {
-    height: auto;
-    transform: none !important;
+  .banner-part.bottom-banner {
+    top: calc(40% + 15%);
   }
 
-  .split-banner.animate-split .top-banner,
+  /* Responsive Split State */
+  .split-banner.animate-split .top-banner {
+    top: 0;
+    height: 15%;
+    transform: translateY(0) !important;
+  }
+
   .split-banner.animate-split .bottom-banner {
-    transform: none !important;
+    bottom: 0;
+    height: 15%;
+    transform: translateY(0) !important;
   }
 
   .carousel-indicators {

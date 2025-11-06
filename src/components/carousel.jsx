@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../style.css";
-import video1 from "../assets/videos/mov_bbb.mp4";
-import video2 from "../assets/videos/mov.mp4";
+import video1 from "../assets/videos/excer.mp4";
+import video2 from "../assets/videos/movsmall.mp4";
 
 const Carousel = () => {
   const slidesRef = useRef([]);
@@ -19,7 +19,6 @@ const Carousel = () => {
     timeoutsRef.current = [];
   };
 
-  // Modified: play video and move to next when finished
   const playVideoSafely = (video, onEnd) => {
     if (!video) return;
     video.muted = true;
@@ -47,21 +46,25 @@ const Carousel = () => {
     if (container) container.classList.remove("playing");
   };
 
-  // 🔥 simplified animation flow
+  // 🚀 Sequence: Center (initial) -> Split Open (after delay)
   const triggerBannerSequence = (slide) => {
     const banners = slide.querySelectorAll(".split-banner");
+
     banners.forEach((b) => {
-      b.classList.remove("animate-marquee", "animate-split", "animate-marquee-closed");
-      b.classList.add("animate-marquee-closed");
+      // 1. Ensure marquee is ALWAYS running (start text scrolling immediately)
+      b.classList.remove("animate-split");
+      b.classList.add("animate-marquee");
     });
 
-    // open split once after small delay
-    setTimeout(() => {
+    // 2. Trigger the smooth transition to the split state after a delay
+    const splitTimeout = setTimeout(() => {
       banners.forEach((b) => {
-        b.classList.remove("animate-marquee-closed");
+        // This class applies the top:0 and bottom:0 positioning in CSS
         b.classList.add("animate-split");
       });
-    }, 1000);
+    }, 1000); // 1 second delay to showcase the center marquee before splitting
+
+    timeoutsRef.current.push(splitTimeout);
   };
 
   const showSlide = (index, animate = true) => {
@@ -70,25 +73,37 @@ const Carousel = () => {
       return;
     }
     const previousIndex = currentSlide;
-    setIsTransitioning(animate && previousIndex !== index);
+    const isNewSlide = previousIndex !== index;
+    
+    clearAllTimeouts(); 
+
+    setIsTransitioning(animate && isNewSlide);
 
     slidesRef.current.forEach((slide, i) => {
       const video = slide.querySelector(".hero-video");
+      const banners = slide.querySelectorAll(".split-banner");
+      
+      // Reset banners to the initial state (Center-Combined, Marquee off initially)
+      banners.forEach((b) => {
+          b.classList.remove("animate-split", "animate-marquee");
+      });
+
       if (i === index) {
         slide.classList.add("active");
         slide.style.transform = "translateX(0)";
         slide.style.opacity = "1";
 
+        // Trigger the animation sequence: Center Marquee -> Split
         triggerBannerSequence(slide);
 
-        // ✅ move to next slide after video ends
+        // Move to next slide after video ends
         playVideoSafely(video, () => {
           const next = (index + 1) % totalSlides;
           showSlide(next, true);
         });
       } else {
         slide.classList.remove("active");
-        slide.style.transform = "translateX(100%)";
+        slide.style.transform = isNewSlide && i < index ? "translateX(-100%)" : "translateX(100%)";
         slide.style.opacity = "0";
         pauseVideo(video);
       }
@@ -100,7 +115,7 @@ const Carousel = () => {
       el.classList.toggle("active", i === index);
     });
 
-    if (animate && previousIndex !== index) {
+    if (animate && isNewSlide) {
       setTimeout(() => setIsTransitioning(false), 800);
     } else {
       setIsTransitioning(false);
