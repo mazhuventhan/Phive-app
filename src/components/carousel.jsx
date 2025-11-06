@@ -5,9 +5,6 @@ import video1 from "../assets/videos/fit1.mp4";
 import video2 from "../assets/videos/fit2.mp4";
 import video3 from "../assets/videos/fit3.mp4";
 
-
-
-
 const Carousel = () => {
   const slidesRef = useRef([]);
   const indicatorsRef = useRef([]);
@@ -23,14 +20,15 @@ const Carousel = () => {
     timeoutsRef.current = [];
   };
 
-  // Modified: play video and move to next when finished
+  // Video playback helper
   const playVideoSafely = (video, onEnd) => {
     if (!video) return;
     video.muted = true;
     const container = video.closest(".video-container");
 
     const tryPlay = () => {
-      video.play()
+      video
+        .play()
         .then(() => {
           if (container) container.classList.add("playing");
           if (onEnd) {
@@ -51,21 +49,37 @@ const Carousel = () => {
     if (container) container.classList.remove("playing");
   };
 
-  // 🔥 simplified animation flow
+  // ✨ SMOOTH SPLIT + 3D TEXT ANIMATION
   const triggerBannerSequence = (slide) => {
     const banners = slide.querySelectorAll(".split-banner");
+
     banners.forEach((b) => {
       b.classList.remove("animate-marquee", "animate-split", "animate-marquee-closed");
       b.classList.add("animate-marquee-closed");
     });
 
-    // open split once after small delay
+    // Hold closed for 2s, then split smoothly
     setTimeout(() => {
       banners.forEach((b) => {
         b.classList.remove("animate-marquee-closed");
         b.classList.add("animate-split");
+
+        // Animate letters with delay and spacing
+        const textWrappers = b.querySelectorAll(".text-wrapper span");
+        textWrappers.forEach((tw) => {
+          const text = tw.textContent.trim();
+          const letters = text.split("");
+          tw.innerHTML = "";
+          letters.forEach((letter, i) => {
+            const span = document.createElement("span");
+            span.textContent = letter;
+            span.style.animationDelay = `${i * 0.12 + 0.5}s`; // delay per letter
+            span.classList.add("letter-3d");
+            tw.appendChild(span);
+          });
+        });
       });
-    }, 1000);
+    }, 2000); // keep closed for 2s
   };
 
   const showSlide = (index, animate = true) => {
@@ -85,7 +99,7 @@ const Carousel = () => {
 
         triggerBannerSequence(slide);
 
-        // ✅ move to next slide after video ends
+        // Move to next slide after video ends
         playVideoSafely(video, () => {
           const next = (index + 1) % totalSlides;
           showSlide(next, true);
@@ -127,7 +141,6 @@ const Carousel = () => {
                 <div className="banner-text">
                   <div className="text-wrapper">
                     <span>PHIVE PORTO</span>
-                    <span>PHIVE PORTO</span>
                   </div>
                 </div>
               </div>
@@ -135,18 +148,12 @@ const Carousel = () => {
                 <div className="banner-text">
                   <div className="text-wrapper">
                     <span>PHIVE PORTO</span>
-                    <span>PHIVE PORTO</span>
                   </div>
                 </div>
               </div>
             </div>
             <div className="video-container">
-              <video
-                className="hero-video"
-                muted
-                playsInline
-                preload="auto"
-              >
+              <video className="hero-video" muted playsInline preload="auto">
                 <source src={video1} type="video/mp4" />
               </video>
             </div>
@@ -161,7 +168,6 @@ const Carousel = () => {
                 <div className="banner-text">
                   <div className="text-wrapper">
                     <span>PHIVE</span>
-                    <span>PHIVE</span>
                   </div>
                 </div>
               </div>
@@ -169,18 +175,12 @@ const Carousel = () => {
                 <div className="banner-text">
                   <div className="text-wrapper">
                     <span>PORTO</span>
-                    <span>PORTO</span>
                   </div>
                 </div>
               </div>
             </div>
             <div className="video-container">
-              <video
-                className="hero-video"
-                muted
-                playsInline
-                preload="auto"
-              >
+              <video className="hero-video" muted playsInline preload="auto">
                 <source src={video2} type="video/mp4" />
               </video>
             </div>
@@ -195,7 +195,6 @@ const Carousel = () => {
                 <div className="banner-text-large">
                   <div className="text-wrapper">
                     <span>TRAIN</span>
-                    <span>TRAIN</span>
                   </div>
                 </div>
               </div>
@@ -203,18 +202,12 @@ const Carousel = () => {
                 <div className="banner-text-large">
                   <div className="text-wrapper">
                     <span>EVERY DAY</span>
-                    <span>EVERY DAY</span>
                   </div>
                 </div>
               </div>
             </div>
             <div className="video-container">
-              <video
-                className="hero-video"
-                muted
-                playsInline
-                preload="auto"
-              >
+              <video className="hero-video" muted playsInline preload="auto">
                 <source src={video3} type="video/mp4" />
               </video>
             </div>

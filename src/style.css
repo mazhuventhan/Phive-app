@@ -155,34 +155,18 @@ body {
 .banner-part .banner-text .text-wrapper span,
 .banner-part .banner-text-large .text-wrapper span {
   display: inline-block;
-  padding-right: 2em;
+  padding-right: 0.2em;
 }
 
 @keyframes textMarqueeAndSlide {
   0% {
     transform: translateX(0) translateY(0);
   }
-  12.5% {
-    transform: translateX(-6.25%) translateY(-15px);
-  }
-  25% {
-    transform: translateX(-12.5%) translateY(0);
-  }
-  37.5% {
-    transform: translateX(-18.75%) translateY(15px);
-  }
+  
   50% {
     transform: translateX(-25%) translateY(0);
   }
-  62.5% {
-    transform: translateX(-31.25%) translateY(-15px);
-  }
-  75% {
-    transform: translateX(-37.5%) translateY(0);
-  }
-  87.5% {
-    transform: translateX(-43.75%) translateY(15px);
-  }
+ 
   100% {
     transform: translateX(-50%) translateY(0);
   }
@@ -332,5 +316,60 @@ body {
   .indicator {
     width: 20px;
     height: 3px;
+  }
+}
+/* ===============================
+   Smooth Split + 3D Text Animation
+   =============================== */
+
+/* smooth split opening */
+.animate-split .banner-part {
+  transform-origin: center;
+  transition: transform 2s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.animate-split .top-banner {
+  transform: translateY(-50%);
+}
+
+.animate-split .bottom-banner {
+  transform: translateY(50%);
+}
+
+/* when closed */
+.animate-marquee-closed .top-banner,
+.animate-marquee-closed .bottom-banner {
+  transform: translateY(0);
+}
+
+/* text wrapper letter spacing */
+.text-wrapper {
+  display: inline-block;
+}
+.text-wrapper span {
+  display: inline-block;
+  letter-spacing: 0.2em;
+}
+
+/* 3D letter flip animation */
+.letter-3d {
+  display: inline-block;
+  transform: rotateX(90deg) translateY(20px);
+  opacity: 0;
+  animation: letterRise 0.8s forwards cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+@keyframes letterRise {
+  0% {
+    transform: rotateX(90deg) translateY(20px);
+    opacity: 0;
+  }
+  50% {
+    transform: rotateX(45deg) translateY(-4px);
+    opacity: 0.6;
+  }
+  100% {
+    transform: rotateX(0deg) translateY(0);
+    opacity: 1;
   }
 }
