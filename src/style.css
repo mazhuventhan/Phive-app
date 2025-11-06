@@ -112,7 +112,7 @@ body {
 
 /* When split open */
 .split-banner.animate-split .banner-part.top-banner {
-  top: 0;
+  top: -14px;
   height: 20%;
   transform: translateY(10%) !important; /* smaller shift */
 }
