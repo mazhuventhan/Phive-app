@@ -247,10 +247,10 @@ body {
 }
 
 .split-banner.animate-marquee-closed .top-banner {
-  animation: marqueeTop 8s linear infinite;
+  animation: none;
 }
 .split-banner.animate-marquee-closed .bottom-banner {
-  animation: marqueeBottom 8s linear infinite;
+  animation: none;
 }
 
 /* Split state - pause marquee */

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../style.css";
-import video1 from "../assets/videos/fit1.mp4";
-import video2 from "../assets/videos/fit2.mp4";
-import video3 from "../assets/videos/fit3.mp4";
+import video1 from "../assets/videos/fit3.mp4";
+import video2 from "../assets/videos/fit1.mp4";
+import video3 from "../assets/videos/fit2.mp4";
 
 
 
