@@ -188,15 +188,13 @@ body {
   }
 }
 
-/* Colors */
 .yellow-banner {
-  background-color: gold;
+  background-color: rgb(223, 192, 21);
 }
 .pink-banner {
-  background-color: #ff1493;
+  background-color: #b76eff;
 }
 
-/* 🌀 Animations */
 .split-banner.animate-marquee-closed .top-banner {
   animation: marqueeTop 8s linear infinite;
 }

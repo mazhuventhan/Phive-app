@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../style.css";
-import video1 from "../assets/videos/excer.mp4";
-import video2 from "../assets/videos/movsmall.mp4";
+import video1 from "../assets/videos/fit1.mp4";
+import video2 from "../assets/videos/fit.mp4";
+import video3 from "../assets/videos/fit1.mp4";
+
 
 const Carousel = () => {
   const slidesRef = useRef([]);
@@ -211,7 +213,7 @@ const Carousel = () => {
                 playsInline
                 preload="auto"
               >
-                <source src={video1} type="video/mp4" />
+                <source src={video3} type="video/mp4" />
               </video>
             </div>
           </div>
